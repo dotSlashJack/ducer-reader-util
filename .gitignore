@@ -50,3 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# My stuff
+pi/Dockerfile
+.vscode/
+.vscode/*
+*.o
+pi/pi_listener
+*/pi_listener
+pi_listener
