@@ -4,6 +4,7 @@
 */
 #include <stdio.h>
 #include "serial.h"
+#include "socket.h"
 
 // TODO: you should update this as applicable
 char* portname = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_950373235353516030B1-if00";
@@ -15,7 +16,10 @@ int main() {
         return -1;
     }
 
+    socket_init();
+
     while (1) {
+        printf("looping\n");
         char rx_buffer[256];
         int rx_length = uart_read(uart_fd, rx_buffer, sizeof(rx_buffer) - 1);
 
@@ -27,10 +31,16 @@ int main() {
             rx_buffer[rx_length] = '\0';
             printf("%i bytes read : %s\n", rx_length, rx_buffer);
         }
+        printf("before send\n");
+        socket_send(rx_buffer);
+        printf("socket sent\n");
 
         sleep(1);
     }
 
+    socket_close();
+
     uart_close(uart_fd);
+    
     return 0;
 }
